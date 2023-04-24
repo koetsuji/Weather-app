@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>Weather.io</header>
+
+  <div style="margin-bottom: 80px;" id="current-weather">
+    <h2 class="current-city">Weather in <span class="current-city" id="current-city"></span><i id="current-icon" class="weather-icon"></i></h2>
+    <p>Temperature: <span id="current-temperature"></span> &#8451;</p>
+    <p>Humidity: <span id="current-humidity"></span>%</p>
+    <p>Description: <span id="current-description"></span></p>
+    <div id="map"></div>
+  </div>
+
+  <h1>Search Weather of a City</h1>
+  <form id="search-form">
+    <input class="search-bar" list="cities" id="location" name="location">
+    <datalist id="cities"></datalist>
+    <button class="button">Get Weather</button>
+  </form>
+
+  <div id="weather-details">
+    <h2 class="current-city" id="city"></h2>
+    <p>Temperature: <span id="temperature"></span> &#8451;</p>
+    <p>Humidity: <span id="humidity"></span>%</p>
+    <p>Description: <span id="description"></span></p>
+    <i id="icon" class="weather-icon"></i>
+  </div>
+
+
+<footer>
+    <p>by Agon</p>
+    <p><a href="mailto:agonfighter@gmail.com">agonfighter@gmail.com</a></p>
+  </footer>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+  <script src="app.js"></script>
+</body>
+</html>
