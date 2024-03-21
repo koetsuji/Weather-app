@@ -63,7 +63,7 @@ header {
 
 .container-big {
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Laser_Towards_Milky_Ways_Centre.jpg/861px-Laser_Towards_Milky_Ways_Centre.jpg");
-  height: 50px;
+  height: 100px;
   background-size: cover;
   align-items: center;
   display: flex;
