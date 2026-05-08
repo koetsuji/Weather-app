@@ -73,10 +73,43 @@ function getWeatherIcon(condition) {
     }
 
     return `
-        <svg viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="13" fill="white"/>
-            <path d="M32 8v8M32 48v8M56 32h-8M16 32H8M49 15l-6 6M21 43l-6 6M49 49l-6-6M21 21l-6-6" stroke="white" stroke-width="5" stroke-linecap="round"/>
-        </svg>
+        <svg viewBox="0 0 128 128" fill="none">
+
+    <defs>
+        <radialGradient id="sunGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff6b7"/>
+            <stop offset="100%" stop-color="#ffd43b"/>
+        </radialGradient>
+
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
+    <g class="sun-rays" stroke="#ffe066" stroke-width="6" stroke-linecap="round">
+        <path d="M64 12V28"/>
+        <path d="M64 100V116"/>
+        <path d="M12 64H28"/>
+        <path d="M100 64H116"/>
+        <path d="M27 27L38 38"/>
+        <path d="M90 90L101 101"/>
+        <path d="M27 101L38 90"/>
+        <path d="M90 38L101 27"/>
+    </g>
+
+    <circle
+        cx="64"
+        cy="64"
+        r="22"
+        fill="url(#sunGradient)"
+        filter="url(#glow)"
+    />
+
+</svg>
     `;
 }
 
@@ -271,5 +304,9 @@ function loadUserWeather() {
         }
     );
 }
+
+weatherIcon.innerHTML = getWeatherIcon("clear");
+updateWeatherBackground("clear");
+dateEl.textContent = formatDate();
 
 loadUserWeather();

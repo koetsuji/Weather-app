@@ -37,7 +37,7 @@ body {
 
 .top-bar {
     width: 100%;
-    max-width: 500px;
+    max-width: 560px;
     margin-top: 40px;
 }
 
@@ -86,7 +86,8 @@ body {
 
 .weather-card {
     width: 100%;
-    max-width: 500px;
+    max-width: 560px;
+    min-height: 410px;
     margin-top: 32px;
     padding: 28px;
     border-radius: 32px;
@@ -191,6 +192,10 @@ body {
     flex: 1;
 }
 
+.search-box input {
+    width: 100%;
+}
+
 .suggestions {
     position: absolute;
     top: 58px;
@@ -215,14 +220,6 @@ body {
     background: rgba(255,255,255,0.08);
 }
 
-
-
-.weather-icon img {
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
-}
 
 
 .weather-card.loading {
@@ -264,4 +261,36 @@ body.weather-storm {
     color: rgba(255,255,255,0.65);
     font-size: 0.9rem;
     min-height: 20px;
+}
+
+
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatSoft {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.weather-icon svg {
+    animation: floatSoft 5s ease-in-out infinite;
+}
+
+.weather-icon .sun-rays {
+    transform-origin: center;
+    animation: rotateSlow 18s linear infinite;
 }
