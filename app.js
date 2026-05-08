@@ -1,100 +1,90 @@
-const apiKey = 'ca98b0ba703a0a3d2ed3a9aba0840545';
-const mapApiKey = 'AIzaSyCICbCwaiYz2QRS97gS9fV1AJGSk4fV0_o';
-const mapContainer = document.getElementById('map');
+const API_KEY = "ca98b0ba703a0a3d2ed3a9aba0840545";
 
-// Function to add weather icon
-function addWeatherIcon(iconId, elementId) {
-  const iconElement = document.createElement('span');
-  iconElement.classList.add('weather-icon');
-  iconElement.classList.add('animate__animated', 'animate__fadeIn', 'animate__slow');
-  iconElement.innerHTML = `<i class="wi wi-owm-${iconId}"></i>`;
-  document.getElementById(elementId).appendChild(iconElement);
+const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
+const suggestionsBox = document.getElementById("suggestions");
+
+const temperatureEl = document.getElementById("temperature");
+const conditionEl = document.getElementById("weather-condition");
+const cityNameEl = document.getElementById("city-name");
+const dateEl = document.getElementById("date");
+const humidityEl = document.getElementById("humidity");
+const windEl = document.getElementById("wind");
+const feelsLikeEl = document.getElementById("feels-like");
+
+let selectedCity = null;
+let debounceTimer = null;
+
+function formatDate() {
+    return new Date().toLocaleDateString("en-US", {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+    });
 }
 
-// Initialize map
-function initMap(latitude, longitude) {
-    console.log('initMap() called');
-    console.log('latitude:', latitude);
-    console.log('longitude:', longitude);
-  
-    const mapElement = document.getElementById('map');
-    const mapOptions = {
-      center: { lat: latitude, lng: longitude },
-      zoom: 12,
-    };
-    const map = new google.maps.Map(mapElement, mapOptions);
-    const marker = new google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map: map,
+async function getCitySuggestions(query) {
+    if (query.length < 2) {
+        suggestionsBox.style.display = "none";
+        return;
+    }
+
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`;
+
+    const response = await fetch(url);
+    const cities = await response.json();
+
+    suggestionsBox.innerHTML = "";
+
+    cities.forEach(city => {
+        const item = document.createElement("div");
+        item.classList.add("suggestion-item");
+
+        item.textContent = `${city.name}, ${city.country}`;
+
+        item.addEventListener("click", () => {
+            selectedCity = city;
+            searchInput.value = `${city.name}, ${city.country}`;
+            suggestionsBox.style.display = "none";
+            getWeather(city.lat, city.lon, city.name, city.country);
+        });
+
+        suggestionsBox.appendChild(item);
     });
-  }
 
-// Get location from IP address
-fetch(`https://ipinfo.io/json?token=b259edd71368c0`)
-  .then(response => response.json())
-  .then(({ city, country, loc }) => {
-    // Set current city name
-    document.getElementById('current-city').textContent = `${city}, ${country}`;
+    suggestionsBox.style.display = cities.length ? "block" : "none";
+}
 
-    // Get current weather
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`)
-      .then(response => response.json())
-      .then(({ cod, main, weather }) => {
-        if (cod === '404') {
-          throw new Error('City not found');
-        }
-        document.getElementById('current-temperature').textContent = main.temp;
-        document.getElementById('current-humidity').textContent = main.humidity;
-        document.getElementById('current-description').textContent = weather[0].description;
-        addWeatherIcon(weather[0].id, 'current-city');
-      })
-      .catch(error => {
-        console.error('Error fetching current weather:', error);
-      });
+async function getWeather(lat, lon, cityName, country) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
 
-    // Initialize Google Maps with current location
-    const [latitude, longitude] = loc.split(',');
-    initMap(latitude, longitude);
-  })
-  .catch(error => {
-    console.error('Error fetching location:', error);
-  });
+    const response = await fetch(url);
+    const data = await response.json();
 
-// Get city list for search bar
-fetch('https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json')
-  .then(response => response.json())
-  .then(cityList => {
-    const datalist = document.getElementById('cities');
-    cityList.forEach(({ name }) => {
-      const option = document.createElement('option');
-      option.value = name;
-      datalist.appendChild(option);
-    });
-  })
-  .catch(error => {
-    console.error('Unable to retrieve city list:', error);
-  });
+    temperatureEl.textContent = `${Math.round(data.main.temp)}°`;
+    conditionEl.textContent = data.weather[0].description;
+    cityNameEl.textContent = `${cityName}, ${country}`;
+    dateEl.textContent = formatDate();
+    humidityEl.textContent = `${data.main.humidity}%`;
+    windEl.textContent = `${Math.round(data.wind.speed * 3.6)} km/h`;
+    feelsLikeEl.textContent = `${Math.round(data.main.feels_like)}°`;
+}
 
-// Handle form submission
-const form = document.querySelector('form');
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const location = document.getElementById('location').value;
+searchInput.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
 
- // Get weather for location
- fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`)
- .then(response => response.json())
- .then(({ cod, main, weather }) => {
-   if (cod === '404') {
-     throw new Error('City not found');
-   }
-   document.getElementById('city').textContent = location;
-   document.getElementById('temperature').textContent = main.temp;
-   document.getElementById('humidity').textContent = main.humidity;
-   document.getElementById('description').textContent = weather[0].description;
-   addWeatherIcon(weather[0].id, 'city');
- })
- .catch(error => {
-   console.error('Error fetching weather data:', error);
- });
+    debounceTimer = setTimeout(() => {
+        getCitySuggestions(searchInput.value.trim());
+    }, 300);
+});
+
+searchBtn.addEventListener("click", () => {
+    if (selectedCity) {
+        getWeather(
+            selectedCity.lat,
+            selectedCity.lon,
+            selectedCity.name,
+            selectedCity.country
+        );
+    }
 });

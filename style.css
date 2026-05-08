@@ -1,218 +1,206 @@
-html, body {
-  height: 100%;
-  margin: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-html {
-  display: table;
-  margin: auto;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-/* a note to try to commit again */
 
 body {
-  display: table-cell;
-  vertical-align: middle;
-  background-color: lightblue;
-  width: 50%;
-  text-align: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background: #060816;
+    overflow-x: hidden;
+    color: white;
 }
 
-h1 {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: rgb(255, 162, 0);
+.background-glow {
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(76,110,245,0.35) 0%, rgba(0,0,0,0) 70%);
+    top: -200px;
+    right: -200px;
+    z-index: 0;
 }
 
-p {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
+.app {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.weather-icon {
-  font-size: 1.5em;
-  vertical-align: middle;
-  display: inline-block;
-  margin-left: 10px;
+.top-bar {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 40px;
 }
 
-/* Styles for the header */
-header {
+.top-bar h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
 }
 
-.container1 {
-  background-size: cover;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+.search-container {
+    display: flex;
+    gap: 12px;
 }
 
-.box1 {
-  background-color: rgb(255 255 255 / 30%);
-  backdrop-filter: blur(10px);
-  border-radius: 5px;
-  color: white;
-  font-family: sans-serif;
-  text-align: center;
-  max-width: 50%;
-  max-height: 50%;
-  padding: 20px 40px;
+.search-container input {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    outline: none;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 1rem;
 }
 
-.container-big {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Laser_Towards_Milky_Ways_Centre.jpg/861px-Laser_Towards_Milky_Ways_Centre.jpg");
-  height: 100px;
-  background-size: cover;
-  align-items: center;
-  display: flex;
+.search-container input::placeholder {
+    color: rgba(255,255,255,0.5);
 }
 
-/* Styles for the main content */
-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 2rem 0;
+.search-container button {
+    border: none;
+    padding: 16px 20px;
+    border-radius: 18px;
+    background: #4c6ef5;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.search-container button:hover {
+    transform: translateY(-2px);
 }
 
 .weather-card {
-  background-color: #ecf0f1;
-  border-radius: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin: 1rem;
-  padding: 1rem;
-  width: calc(50% - 2rem);
+    width: 100%;
+    max-width: 500px;
+    margin-top: 32px;
+    padding: 28px;
+    border-radius: 32px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.weather-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.temperature-section h2 {
+    font-size: 5rem;
+    line-height: 1;
+    letter-spacing: -5px;
+}
+
+.temperature-section p {
+    margin-top: 8px;
+    color: rgba(255,255,255,0.7);
 }
 
 .weather-icon {
-  font-size: 3rem;
-  margin-right: 1rem;
-  vertical-align: middle;
+    font-size: 4rem;
 }
 
-.temperature {
-  font-size: 5rem;
-  font-weight: bold;
-  margin: 0;
+.city-section {
+    margin-top: 32px;
 }
 
-.description {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
+.city-section h3 {
+    font-size: 1.8rem;
 }
 
-/* Styles for the search form */
-form {
-  display: flex;
-  flex-direction: column;
-  margin: 2rem 0;
-  align-items: center;
+.city-section p {
+    margin-top: 6px;
+    color: rgba(255,255,255,0.6);
 }
 
-label {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.weather-details {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
 }
 
-.search-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  margin-bottom: 20px;
-  width: 70%;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 20px;
-  justify-content: center;
-  margin-bottom: 20px;
-  text-align: center;
+.detail-card {
+    background: rgba(255,255,255,0.05);
+    padding: 18px;
+    border-radius: 20px;
 }
 
-.search-bar input[type="text"] {
-  border-radius: 20px;
-  padding: 10px;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-  font-weight: 500;
-  width: 100%;
-  padding: 10px;
+.detail-card span {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
 }
 
-.search-bar input[type="submit"] {
-  background-color: #2c3e50;
-  border: none;
-  border-radius: 0.5rem;
-  color: white;
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  width: 30%;
+.detail-card strong {
+    font-size: 1.1rem;
 }
 
-.search-bar input[type="submit"]:hover {
-  cursor: pointer;
-  background-color: #34495e;
-}
+@media (max-width: 600px) {
 
-/* Styles for the map container */
-#map-container {
-  height: 400px;
-  margin-top: 2rem;
-  position: absolute;
-}
+    .search-container {
+        flex-direction: column;
+    }
 
-#map {
-  height: 100%;
-  width: 100%;
-}
+    .weather-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
 
-/* Styles for the footer */
-footer {
-  background-color: #2c3e50;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-  margin: 0;
-}
+    .weather-details {
+        grid-template-columns: 1fr;
+    }
 
-/* Styles for the search button */
+    .temperature-section h2 {
+        font-size: 4rem;
+    }
 
-.button {
-  align-self: center;
-  background-color: #2196f3;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  width: 70%;
-}
-
-.button:hover {
-  background-color: #0d8bf5;
-}
-
-.button:focus {
-  box-shadow: 0px 0px 5px 1px #2196f3;
-  outline: none;
-}
-
-.button:active {
-  background-color: #0a72c3;
 }
 
 
+.search-box {
+    position: relative;
+    flex: 1;
+}
 
-.current-city {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+.suggestions {
+    position: absolute;
+    top: 58px;
+    left: 0;
+    right: 0;
+    background: rgba(25, 27, 43, 0.96);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    z-index: 10;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 14px 16px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.85);
+    transition: 0.15s ease;
+}
+
+.suggestion-item:hover {
+    background: rgba(255,255,255,0.08);
 }
