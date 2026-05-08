@@ -37,7 +37,7 @@ body {
 
 .top-bar {
     width: 100%;
-    max-width: 500px;
+    max-width: 560px;
     margin-top: 40px;
 }
 
@@ -86,7 +86,8 @@ body {
 
 .weather-card {
     width: 100%;
-    max-width: 500px;
+    max-width: 560px;
+    min-height: 410px;
     margin-top: 32px;
     padding: 28px;
     border-radius: 32px;
@@ -113,7 +114,17 @@ body {
 }
 
 .weather-icon {
-    font-size: 4rem;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 16px rgba(255,255,255,0.18));
 }
 
 .city-section {
@@ -181,6 +192,10 @@ body {
     flex: 1;
 }
 
+.search-box input {
+    width: 100%;
+}
+
 .suggestions {
     position: absolute;
     top: 58px;
@@ -203,4 +218,79 @@ body {
 
 .suggestion-item:hover {
     background: rgba(255,255,255,0.08);
+}
+
+
+
+.weather-card.loading {
+    opacity: 0.65;
+    transform: scale(0.99);
+    pointer-events: none;
+}
+
+.search-container button.loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+
+
+body.weather-clear {
+    background: radial-gradient(circle at top right, #2f3b8f 0%, #060816 45%, #03040c 100%);
+}
+
+body.weather-clouds {
+    background: radial-gradient(circle at top right, #3b465c 0%, #111522 45%, #060816 100%);
+}
+
+body.weather-rain {
+    background: radial-gradient(circle at top right, #1d3557 0%, #07111f 45%, #03040c 100%);
+}
+
+body.weather-snow {
+    background: radial-gradient(circle at top right, #5f7c91 0%, #18222d 45%, #060816 100%);
+}
+
+body.weather-storm {
+    background: radial-gradient(circle at top right, #302b63 0%, #0f0c29 45%, #03040c 100%);
+}
+
+
+.status-message {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatSoft {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.weather-icon svg {
+    animation: floatSoft 5s ease-in-out infinite;
+}
+
+.weather-icon .sun-rays {
+    transform-origin: center;
+    animation: rotateSlow 18s linear infinite;
 }
