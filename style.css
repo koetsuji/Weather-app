@@ -113,7 +113,17 @@ body {
 }
 
 .weather-icon {
-    font-size: 4rem;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 16px rgba(255,255,255,0.18));
 }
 
 .city-section {
@@ -203,4 +213,55 @@ body {
 
 .suggestion-item:hover {
     background: rgba(255,255,255,0.08);
+}
+
+
+
+.weather-icon img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+}
+
+
+.weather-card.loading {
+    opacity: 0.65;
+    transform: scale(0.99);
+    pointer-events: none;
+}
+
+.search-container button.loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+
+
+body.weather-clear {
+    background: radial-gradient(circle at top right, #2f3b8f 0%, #060816 45%, #03040c 100%);
+}
+
+body.weather-clouds {
+    background: radial-gradient(circle at top right, #3b465c 0%, #111522 45%, #060816 100%);
+}
+
+body.weather-rain {
+    background: radial-gradient(circle at top right, #1d3557 0%, #07111f 45%, #03040c 100%);
+}
+
+body.weather-snow {
+    background: radial-gradient(circle at top right, #5f7c91 0%, #18222d 45%, #060816 100%);
+}
+
+body.weather-storm {
+    background: radial-gradient(circle at top right, #302b63 0%, #0f0c29 45%, #03040c 100%);
+}
+
+
+.status-message {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    min-height: 20px;
 }
